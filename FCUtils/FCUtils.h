@@ -6,6 +6,7 @@
 //
 
 #import "UIColor+Hex.h"
+#import "UIImage+Alpha.h"
 #import "UIImageView+Image.h"
 #import "UIView+Snapshot.h"
 
