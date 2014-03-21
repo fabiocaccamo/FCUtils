@@ -9,6 +9,6 @@
 #import "UIImageView+Image.h"
 #import "UIView+Snapshot.h"
 
-@interface FCMap:NSObject
+@interface FCUtils:NSObject
 
 @end
