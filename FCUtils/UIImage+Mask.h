@@ -1,6 +1,5 @@
 //
 //  UIImage+Mask.h
-//  FCUtilsDemo
 //
 //  Created by Fabio Caccamo on 21/03/14.
 //  Copyright (c) 2014 Fabio Caccamo. All rights reserved.
@@ -11,5 +10,6 @@
 @interface UIImage (Mask)
 
 -(UIImage *)imageWithMask:(UIImage *)mask;
+-(UIImage *)imageWithMaskNamed:(NSString *)maskName;
 
 @end
