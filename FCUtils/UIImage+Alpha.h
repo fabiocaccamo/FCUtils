@@ -9,6 +9,7 @@
 
 @interface UIImage (Alpha)
 
++(UIImage *)imageNamed:(NSString *)name withAlpha:(CGFloat)alpha;
 -(UIImage *)imageWithAlpha:(CGFloat)alpha;
 
 @end

@@ -9,6 +9,8 @@
 
 @interface UIImage (Mask)
 
++(UIImage *)imageNamed:(NSString *)name withMask:(UIImage *)mask;
++(UIImage *)imageNamed:(NSString *)name withMaskNamed:(NSString *)maskName;
 -(UIImage *)imageWithMask:(UIImage *)mask;
 -(UIImage *)imageWithMaskNamed:(NSString *)maskName;
 

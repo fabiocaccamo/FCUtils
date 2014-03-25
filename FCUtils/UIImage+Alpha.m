@@ -10,6 +10,12 @@
 @implementation UIImage (Alpha)
 
 
++(UIImage *)imageNamed:(NSString *)name withAlpha:(CGFloat)alpha
+{
+    return [[UIImage imageNamed:name] imageWithAlpha:alpha];
+}
+
+
 -(UIImage *)imageWithAlpha:(CGFloat)alpha
 {
     UIGraphicsBeginImageContextWithOptions(self.size, NO, 0.0f);

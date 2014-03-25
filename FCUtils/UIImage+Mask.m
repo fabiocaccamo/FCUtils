@@ -10,6 +10,18 @@
 @implementation UIImage (Mask)
 
 
++(UIImage *)imageNamed:(NSString *)name withMask:(UIImage *)mask
+{
+    return [[UIImage imageNamed:name] imageWithMask:mask];
+}
+
+
++(UIImage *)imageNamed:(NSString *)name withMaskNamed:(NSString *)maskName
+{
+    return [UIImage imageNamed:name withMask:[UIImage imageNamed:maskName]];
+}
+
+
 -(UIImage *)imageWithMask:(UIImage *)mask
 {
     CGImageRef imageToMask = self.CGImage;
@@ -27,10 +39,10 @@
     CGImageRef imageMasked = CGImageCreateWithMask(imageToMask, imageMask);
     CGImageRelease(imageMask);
     
-    UIImage *imageWithMask = [UIImage imageWithCGImage:imageMasked];
+    UIImage *imageMaskedResult = [UIImage imageWithCGImage:imageMasked];
     CGImageRelease(imageMasked);
     
-    return imageWithMask;
+    return imageMaskedResult;
 }
 
 
