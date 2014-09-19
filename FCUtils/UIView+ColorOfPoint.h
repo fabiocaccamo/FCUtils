@@ -7,6 +7,6 @@
 
 @interface UIView (ColorOfPoint)
 
-- (UIColor *) colorOfPoint:(CGPoint)point;
+-(UIColor *) colorOfPoint:(CGPoint)point;
 
 @end
