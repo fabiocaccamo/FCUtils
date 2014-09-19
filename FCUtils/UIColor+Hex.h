@@ -11,5 +11,11 @@
 
 +(UIColor *) colorWithHex:(uint)hex;
 +(UIColor *) colorWithHex:(uint)hex alpha:(float)alpha;
++(UIColor *) colorWithHexString:(NSString *)hexString;
++(UIColor *) colorWithHexString:(NSString *)hexString alpha:(float)alpha;
+
+-(uint) hexValue;
+-(NSString *) hexStringValue;
+-(NSString *) hexStringValueWithPrefix:(NSString *)prefix;
 
 @end
