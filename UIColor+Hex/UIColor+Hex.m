@@ -12,16 +12,31 @@
 
 +(UIColor *)colorWithHex:(uint)hex
 {
-    return [self colorWithHex:hex alpha:1.0];
+    return [self colorWithHex:hex alpha:NAN];
 }
 
 
 +(UIColor *)colorWithHex:(uint)hex alpha:(float)alpha
 {
-    float a = alpha; //(((float)((hex & 0xFF000000) >> 24)) / 255.0);
-    float r = (((float)((hex & 0xFF0000) >> 16)) / 255.0);
-    float g = (((float)((hex & 0x00FF00) >> 8))  / 255.0);
-    float b = (((float)((hex & 0x0000FF)))       / 255.0);
+    float a = (((float)((hex & 0xFF000000) >> 24)) / 255.0);
+    float r = (((float)((hex & 0x00FF0000) >> 16)) / 255.0);
+    float g = (((float)((hex & 0x0000FF00) >>  8)) / 255.0);
+    float b = (((float)((hex & 0x000000FF) >>  0)) / 255.0);
+    
+    if( isnan(alpha) )
+    {
+        NSString *hexString = [NSString stringWithFormat:@"%x", hex];
+        //NSLog(@"%@", hexString);
+        
+        if( hexString.length == 6 )
+        {
+            a = 1.0;
+        }
+    }
+    else {
+        
+        a = alpha;
+    }
     
     return [UIColor colorWithRed:r green:g blue:b alpha:a];
 }
@@ -29,21 +44,19 @@
 
 +(UIColor *)colorWithHexString:(NSString *)hexString
 {
-    return [self colorWithHexString:hexString alpha:1.0];
+    return [self colorWithHexString:hexString alpha:NAN];
 }
 
 
 +(UIColor *)colorWithHexString:(NSString *)hexStringInput alpha:(float)alpha
 {
-    NSString *hexString = [hexStringInput stringByReplacingOccurrencesOfString:@"0x" withString:@"#"];
+    NSString *hexString = hexStringInput;
+    hexString = [hexString stringByReplacingOccurrencesOfString:@"0x" withString:@""];
+    hexString = [hexString stringByReplacingOccurrencesOfString:@"#"  withString:@""];
     
     uint hex = 0;
+    
     NSScanner *hexScanner = [NSScanner scannerWithString:hexString];
-    
-    if( [hexString rangeOfString:@"#"].location > -1 ){
-        [hexScanner setScanLocation:1];
-    }
-    
     [hexScanner scanHexInt:&hex];
     
     return [self colorWithHex:hex alpha:alpha];
@@ -59,13 +72,19 @@
     
     [self getRed:&red green:&green blue:&blue alpha:&alpha];
     
-    int redDec = (int)(red * 255);
-    int greenDec = (int)(green * 255);
-    int blueDec = (int)(blue * 255);
-    //int alphaDec = (int)(alpha * 255);
+    int r = (int)(red   * 255);
+    int g = (int)(green * 255);
+    int b = (int)(blue  * 255);
+    int a = (int)(alpha * 255);
     
-    //return ((alphaDec << 24) + (redDec << 16) + (greenDec << 8) + blueDec);
-    return ((redDec << 16) + (greenDec << 8) + blueDec);
+    if( a != 1.0 )
+    {
+        return ((a << 24) + (r << 16) + (g << 8) + b);
+    }
+    else {
+        
+        return (            (r << 16) + (g << 8) + b);
+    }
 }
 
 
@@ -77,20 +96,7 @@
 
 -(NSString *)hexStringValueWithPrefix:(NSString *)prefix
 {
-    CGFloat red;
-    CGFloat green;
-    CGFloat blue;
-    CGFloat alpha;
-    
-    [self getRed:&red green:&green blue:&blue alpha:&alpha];
-    
-    //int alphaDec = (int)(alpha * 255);
-    int redDec = (int)(red * 255);
-    int greenDec = (int)(green * 255);
-    int blueDec = (int)(blue * 255);
-    
-    //return [NSString stringWithFormat:@"%@%02x%02x%02x%02x", prefix, (unsigned int)alphaDec, (unsigned int)redDec, (unsigned int)greenDec, (unsigned int)blueDec];
-    return [NSString stringWithFormat:@"%@%02x%02x%02x", prefix, (unsigned int)redDec, (unsigned int)greenDec, (unsigned int)blueDec];
+    return [NSString stringWithFormat:@"%@%x", prefix, [self hexValue]];
 }
 
 
